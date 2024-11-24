@@ -1,0 +1,19 @@
+function getDebankPortfolioValue(walletAddress) {
+  var accessToken = 'VOTRE_ACCESS_TOKEN'; // Remplacez ceci par votre access token
+  var url = 'https://api.connect.debank.com/v1/user/total_balance?id=' + walletAddress; // Utilisation de la variable walletAddress
+
+  // Effectuer la requête HTTP GET avec le token d'authentification
+  var response = UrlFetchApp.fetch(url, {
+    method: 'get',
+    headers: {
+      'Authorization': 'Bearer ' + accessToken,
+      'accept': 'application/json'
+    }
+  });
+
+  // Analyser la réponse JSON
+  var json = JSON.parse(response.getContentText());
+  var totalValue = json.total_usd_value;  // Récupérer la valeur USD du portefeuille
+
+  return totalValue; // Retourner la valeur pour l'afficher dans Google Sheets
+}
